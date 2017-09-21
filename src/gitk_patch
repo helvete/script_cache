@@ -1,0 +1,14 @@
+#!/bin/bash
+PATCHEE="/usr/bin/gitk"
+
+if [ ! -f "$PATCHEE" ];
+then
+	echo ERROR: "$PATCHEE" not found
+	exit 2;
+fi
+
+cat $PATCHEE | sed -e "s/bind . <F5> updatecommits$/bind . <F5> reloadcommits/g" > /tmp/gitk_tmp
+cp /tmp/gitk_tmp $PATCHEE
+
+echo "Gitk patched"
+exit 0
