@@ -7,8 +7,8 @@ then
 	exit 2;
 fi
 
-cat $PATCHEE | sed -e "s/bind . <F5> updatecommits$/bind . <F5> reloadcommits/g" > /tmp/gitk_tmp
-cp /tmp/gitk_tmp $PATCHEE
+sudo cat $PATCHEE | sed -e "s/bind . <F5> updatecommits$/bind . <F5> reloadcommits/g" > /tmp/gitk_tmp
+sudo cp /tmp/gitk_tmp $PATCHEE
 
 echo "Gitk patched"
 exit 0
