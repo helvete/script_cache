@@ -1,0 +1,42 @@
+#!/bin/bash
+
+# This script helps w/ creating self-signed x509 certificate
+
+TEMP_CERT_DIR=/tmp/_sslcertdata
+CERT_VALIDITY_DAYS=365
+
+if [ ! -e  $TEMP_CERT_DIR ]
+then
+    echo "* Creating temporary cert dir"
+    echo
+    mkdir $TEMP_CERT_DIR
+fi
+
+echo -n "Enter domain name or IP address: "
+read DOMAIN
+
+cd $TEMP_CERT_DIR
+
+echo "* Creating private key"
+echo
+openssl genrsa -des3 -out $DOMAIN.key
+
+echo "* Creating passphraseless private key"
+echo
+openssl rsa -in $DOMAIN.key -out $DOMAIN.key.passphraseless
+
+echo "* Creating CA request"
+echo
+openssl req -new -key $DOMAIN.key -out $DOMAIN.key.csr
+
+echo "* Creating self-signed x509 certificate"
+echo
+openssl x509 -req -days $CERT_VALIDITY_DAYS -in $DOMAIN.key.csr -signkey $DOMAIN.key -out $DOMAIN.cert
+
+echo "* Setting correct file access mode"
+echo
+chmod 400 $TEMP_CERT_DIR/$DOMAIN.cert
+chmod 400 $TEMP_CERT_DIR/$DOMAIN.key
+chmod 400 $TEMP_CERT_DIR/$DOMAIN.key.passphraseless
+
+echo "* Done"
