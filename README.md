@@ -8,3 +8,7 @@ Some handy self-penned scripts
 * create_x509_self-signed_cert
 
 	Helper script for creating self-signed x509 certificates
+
+* deactivate_caps
+
+	Simple script for caps-lock deactivation; to be used as an init script for RC 2-5
