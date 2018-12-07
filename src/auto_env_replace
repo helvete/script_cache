@@ -1,0 +1,19 @@
+#!/bin/sh
+
+TMPL_LOC='/path/to/a/template'
+CONF_LOC='/path/to/the/target'
+TEMP_LOC='/tmp/temp'
+SYNC_LOC='/tmp/sync'
+
+cp $TMPL_LOC $TEMP_LOC
+env | while IFS= read -r line
+do
+    name="${line%%=*}"
+    value="$(eval echo "\$$name")"
+    if [ "$name" != "_" ]
+    then
+	    cat $TEMP_LOC | sed -e "s~$name~$value~g" > $SYNC_LOC
+        mv $SYNC_LOC $TEMP_LOC
+    fi
+done
+mv $TEMP_LOC $CONF_LOC
