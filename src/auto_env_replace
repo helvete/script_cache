@@ -1,19 +1,31 @@
 #!/bin/sh
+if [ "$#" -ne 2 ]; then
+    echo "Incorrect count of input params provided"
+    exit 2
+fi
+if [ ! -f $TMPL_LOC ]; then
+    echo "Template config file not found"
+    exit 1
+fi
+if [ ! $2 ]; then
+    echo "Undefined target config file location"
+    exit 1
+fi
 
-TMPL_LOC='/path/to/a/template'
-CONF_LOC='/path/to/the/target'
+TMPL_LOC=$1
+CONF_LOC=$2
 TEMP_LOC='/tmp/temp'
 SYNC_LOC='/tmp/sync'
 
 cp $TMPL_LOC $TEMP_LOC
 env | while IFS= read -r line
 do
-	name="${line%%=*}"
-	value="$(eval echo "\$$name")"
-	if [ "$name" != "_" ]
-	then
-		cat $TEMP_LOC | sed -e "s~$name~$value~g" > $SYNC_LOC
-		mv $SYNC_LOC $TEMP_LOC
-	fi
+    name="${line%%=*}"
+    value="$(eval echo "\$$name")"
+    if [ "$name" != "_" ]
+    then
+        cat $TEMP_LOC | sed -e "s~$name~$value~g" > $SYNC_LOC
+        mv $SYNC_LOC $TEMP_LOC
+    fi
 done
 mv $TEMP_LOC $CONF_LOC
