@@ -1,0 +1,35 @@
+#!/usr/bin/perl
+
+use strict;
+
+my $monitor_cnt = 0;
+my @xrandr_out = split /\n/, xrandr();
+while (my $line = shift @xrandr_out) {
+    if ($line =~ "^eDP-1 connected") {
+        $monitor_cnt++;
+        print "got eDP-1\n";
+    }
+    if ($line =~ "^HDMI-1 connected") {
+        $monitor_cnt++;
+        print "got HDMI-1\n";
+    }
+    if ($line =~ "^DP-2 connected") {
+        $monitor_cnt++;
+        print "got DP-2\n";
+    }
+}
+
+if ($monitor_cnt == 3) {
+    print "multimontor setup found, running xrandr...\n";
+    `xrandr --output eDP-1 --mode 1920x1080`;
+    `xrandr --output DP-2 --mode 1920x1200 --right-of eDP-1`;
+    `xrandr --output HDMI-1 --mode 1920x1200 --right-of DP-2`;
+    exit 0;
+}
+
+print "insufficient monitor count, doing nothing...\n";
+exit 1;
+
+sub xrandr {
+    my $result = `xrandr | grep "^[a-zA-Z].*"`;
+}
