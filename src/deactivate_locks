@@ -1,0 +1,5 @@
+#!/bin/bash
+
+setxkbmap -option caps:none
+numlockx on
+xmodmap -e 'keycode 77 = NoSymbol Num_Lock'
