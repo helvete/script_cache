@@ -11,7 +11,7 @@ info:
 	@echo " Recipes and running order:"
 	@echo "	1. ca.key"
 	@echo "	2. ca.crt"
-	@echo "	3. csr		-> create ${CLIENT_NAME}.csr"
+	@echo "	3. csr      -> create ${CLIENT_NAME}.csr"
 	@echo "	4. sign     -> create ${CLIENT_NAME}.crt"
 	@echo "	5. bundle   -> create ${CLIENT_NAME}.pkcs12"
 
