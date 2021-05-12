@@ -21,6 +21,7 @@ while (my $line = shift @xrandr_out) {
 
 if ($monitor_cnt == 3) {
     print "multimontor setup found, running xrandr...\n";
+    `xrandr --auto`;
     `xrandr --output eDP-1 --mode 1920x1080`;
     `xrandr --output DP-3-2 --mode 1920x1200 --right-of eDP-1`;
     `xrandr --output DP-3-1 --mode 1920x1200 --right-of DP-3-2`;
