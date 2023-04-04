@@ -1,0 +1,28 @@
+#!/usr/bin/php
+<?php
+
+/*
+    https://3v4l.org/TM9YO#v8.2.4
+*/
+
+$start = 2920000;
+$interestRate = 0.0429;
+$monthlyPayment = 14434;
+$dt = new \DateTime('2022-06-01'); // regular payment start date
+$totalPaid = 5219.49; // initial interest
+
+$rest = $start;
+while ($rest > 0) {
+
+    $mInterest = $rest * $interestRate / 12;
+    $mAnnuity = $monthlyPayment - $mInterest;
+    printf("%s: I:%s A:%s\n", $dt->format('Y-m'), (int)$mInterest, (int)$mAnnuity);
+    $rest -= $mAnnuity;
+    if ($dt->format('Y-m') === '2023-04') {
+        $rest -= 710000;
+        $totalPaid += 710000;
+    }
+    $dt->add(new \DateInterval('P1M'));
+    $totalPaid += $monthlyPayment;
+}
+echo "Total: {$totalPaid}\n";
