@@ -25,6 +25,6 @@ while ($rest > 0) {
         $totalPaid += 710000;
     }
     $dt->add(new \DateInterval('P1M'));
-    $totalPaid += $monthlyPayment;
+    $totalPaid += ($mAnnuity + $mInterest);
 }
 echo "Total: {$totalPaid}\n";
