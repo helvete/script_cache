@@ -16,6 +16,8 @@ while ($rest > 0) {
 
     $mInterest = $rest * $interestRate / 12;
     $mAnnuity = $monthlyPayment - $mInterest;
+    if ($rest < $mAnnuity)
+        $mAnnuity = $rest;
     printf("%s: I:%s A:%s\n", $dt->format('Y-m'), (int)$mInterest, (int)$mAnnuity);
     $rest -= $mAnnuity;
     if ($dt->format('Y-m') === '2023-04') {
