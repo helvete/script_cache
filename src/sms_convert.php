@@ -1,6 +1,22 @@
 #!/bin/env php
 <?php
 
+/*
+ * Transfer SMS history from Android 1.6 device to a modern one (Android 5+)
+ *
+ * 1. Install apk from './data/SMS Backup_v1.0.7_apkfab.com.apk'
+ * 2. Optionally delete sms threads that are not necessary to migrate.
+ * 3. Run export in text format
+ * 4. Transfer the export file from the phone
+ * 5. Move it to './input.txt'
+ * 6. Run this script
+ * 7. Put the contents of the result file (`./converted.xml`)
+ *  into the envelope (./data/sms-20230802142801.xml) under <smses> block
+ * 8. Transfer the final file to the target phone
+ * 9. Install https://play.google.com/store/apps/details?id=com.riteshsahu.SMSBackupRestore
+ * 10. Run restore and celebrate!
+ */
+
 class Msg
 {
     const IN = '1';
