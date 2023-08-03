@@ -84,7 +84,6 @@ okay
 
 $handle = fopen("./input.txt", "r");
 
-$i = 0;
 $record = null;
 $lineBatch = [];
 while ($line = fgets($handle)) {
@@ -101,6 +100,7 @@ while ($line = fgets($handle)) {
     $record->setBody($line);
     $lineBatch[] = create_record($record);
 }
+fclose($handle);
 
 file_put_contents('./converted.xml', implode("\n", $lineBatch));
 
