@@ -33,11 +33,15 @@ class Morse {
     }
 
     private static function parse(string $input) {
-        $chars = str_split($input);
+        $chars = explode(' ', $input);
         if (!count($chars))
             throw new InvalidArgumentException("invalid input");
         $result = "";
         foreach ($chars as $code) {
+            if ($code === "") {
+                $result .= " ";
+                continue;
+            }
             $result .= static::fromCode($code);
         }
         return $result;
@@ -68,6 +72,8 @@ class Morse {
         foreach ($sequence as $letter) {
             if ($encoded != "")
                 $encoded .= " ";
+            if (trim($letter) == "")
+                continue;
             $encoded .= static::fromLetter($letter);
         }
         return $encoded;
