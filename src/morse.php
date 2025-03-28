@@ -52,7 +52,7 @@ class Morse {
             if ($code == static::con($letter))
                 return $letter;
         }
-        throw new InvalidArgumentException(sprintf("unknown code: %s", $code));
+        throw new InvalidArgumentException(sprintf("unknown code: '%s'", $code));
     }
 
     private static function fromLetter(string $letter) {
@@ -61,7 +61,7 @@ class Morse {
         $letter = strtoupper($letter);
         if (empty(static::con($letter)))
             throw new InvalidArgumentException(
-                sprintf("unknown letter: %s", $letter)
+                sprintf("unknown letter: '%s'", $letter)
             );
         return static::con($letter);
     }
@@ -95,4 +95,9 @@ if (!method_exists('Morse', $method)) {
     printf("Invalid operation: %s", $method);
     exit(1);
 }
-printf("%s\n", Morse::$method($message));
+try {
+    printf("%s\n", Morse::$method($message));
+} catch (Throwable $t) {
+    printf("Error occurred: %s\n", $t->getMessage());
+    exit(2);
+}
